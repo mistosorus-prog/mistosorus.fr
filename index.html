@@ -66,7 +66,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
  function start(){if(running)return;if(time<=0)reset();running=true;last=performance.now();msg.textContent='Session en cours — bonne visée !';startBtn.textContent='SESSION EN COURS';requestAnimationFrame(loop)}
  function loop(now){if(!running)return;let dt=Math.min((now-last)/1000,.04);last=now;elapsed+=dt;time=Math.max(0,60-Math.floor(elapsed));targetX+=dir*speed*dt;if(targetX>.82){targetX=.82;dir=-1;targetY=.43+Math.random()*.13}else if(targetX<.18){targetX=.18;dir=1;targetY=.43+Math.random()*.13}updateHud();draw();if(elapsed>=60){running=false;msg.textContent='Fin de session ! Score : '+score+' points.';startBtn.textContent='REJOUER';return}requestAnimationFrame(loop)}
  function pointer(e){const r=canvas.getBoundingClientRect();aim.x=clamp((e.clientX-r.left)/r.width,0,1);aim.y=clamp((e.clientY-r.top)/r.height,0,1);draw()}
- canvas.addEventListener('pointermove',pointer);
+ canvas.addEventListener('pointermove',pointer);canvas.addEventListener('pointerenter',pointer);canvas.addEventListener('mousemove',pointer);canvas.addEventListener('touchmove',e=>{if(e.touches.length){const t=e.touches[0];pointer({clientX:t.clientX,clientY:t.clientY})}},{passive:true});
  canvas.addEventListener('pointerdown',e=>{pointer(e);if(!running){msg.textContent='Commence la session pour tirer.';return}shots++;let dx=(aim.x-targetX)*canvas.width,dy=(aim.y-targetY)*canvas.height;let dist=Math.sqrt(dx*dx+dy*dy);let radius=canvas.width*.075;let points=dist<radius*.18?100:dist<radius*.38?75:dist<radius*.62?50:dist<radius?25:0;if(points){hits++;score+=points;msg.textContent='Touché ! +'+points+' points';holes.push({dx:(aim.x-targetX)/.07,dy:(aim.y-targetY)/.22})}else msg.textContent='Raté ! Ajuste ta visée.';if(holes.length>18)holes.shift();updateHud();draw()});
  startBtn.addEventListener('click',start);resetBtn.addEventListener('click',reset);
  function draw(){
@@ -97,7 +97,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
   ctx.strokeStyle='#080a0b';ctx.lineWidth=24;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
   ctx.strokeStyle='#d7ded5';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,r-12,0,Math.PI*2);ctx.stroke();
   // reticle and range marks
-  const ax=cx+(aim.x-.5)*w,ay=cy+(aim.y-.5)*h;
+  const ax=aim.x*w,ay=aim.y*h;
   ctx.strokeStyle='rgba(230,238,226,.82)';ctx.lineWidth=1.7;ctx.beginPath();ctx.moveTo(ax-r*.92,ay);ctx.lineTo(ax-r*.12,ay);ctx.moveTo(ax+r*.12,ay);ctx.lineTo(ax+r*.92,ay);ctx.moveTo(ax,ay-r*.92);ctx.lineTo(ax,ay-r*.12);ctx.moveTo(ax,ay+r*.12);ctx.lineTo(ax,ay+r*.92);ctx.stroke();
   ctx.strokeStyle='rgba(230,238,226,.6)';for(let i=-5;i<=5;i++){let xx=ax+i*r*.12,yy=ay+i*r*.12;ctx.beginPath();ctx.moveTo(xx,ay-6);ctx.lineTo(xx,ay+6);ctx.moveTo(ax-6,yy);ctx.lineTo(ax+6,yy);ctx.stroke()}
   ctx.strokeStyle='#d5efc7';ctx.lineWidth=2;ctx.beginPath();ctx.arc(ax,ay,8,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#d5efc7';ctx.fillRect(ax-2,ay-2,4,4);
