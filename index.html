@@ -86,7 +86,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
   ctx.beginPath();ctx.moveTo(-w*.027,-h*.055);ctx.lineTo(w*.027,-h*.055);ctx.lineTo(w*.035,h*.12);ctx.lineTo(w*.018,h*.16);ctx.lineTo(-w*.018,h*.16);ctx.lineTo(-w*.035,h*.12);ctx.closePath();ctx.fill();ctx.stroke();
   // bullseye rings
   [w*.022,w*.016,w*.01,w*.004].forEach((rr,i)=>{ctx.beginPath();ctx.arc(0,h*.035,rr,0,Math.PI*2);ctx.fillStyle=i===3?'#b52e28':i%2?'#222':'#eee';ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=1.5;ctx.stroke()});
-  if(targetLogo.complete&&targetLogo.naturalWidth){ctx.save();ctx.globalAlpha=.96;ctx.drawImage(targetLogo,-w*.018,-h*.005,w*.036,h*.04);ctx.restore();}\n  // Impacts imprimés sur la cible : ils restent à la même place sur le carton pendant son déplacement
+  if(targetLogo.complete&&targetLogo.naturalWidth){ctx.save();const logoW=w*.034,logoH=logoW*targetLogo.naturalHeight/targetLogo.naturalWidth;ctx.globalAlpha=.96;ctx.drawImage(targetLogo,-logoW/2,h*.082-logoH/2,logoW,logoH);ctx.restore();}
+  // Impacts imprimés sur la cible : ils restent à la même place sur le carton pendant son déplacement
   holes.forEach(p=>{const hx=tx+p.dx*w*.07,hy=ty+p.dy*h*.22;if(Math.abs(p.dx)<.43&&p.dy>-.25&&p.dy<.72){ctx.fillStyle='#26201b';ctx.beginPath();ctx.arc(hx,hy,5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#f3d9b5';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(hx,hy,7,0,Math.PI*2);ctx.stroke();}});
   ctx.restore();
   // scope mask
