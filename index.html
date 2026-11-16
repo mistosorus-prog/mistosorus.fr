@@ -67,7 +67,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
  function loop(now){if(!running)return;let dt=Math.min((now-last)/1000,.04);last=now;elapsed+=dt;time=Math.max(0,60-Math.floor(elapsed));targetX+=dir*speed*dt;if(targetX>.82){targetX=.82;dir=-1;targetY=.43+Math.random()*.13}else if(targetX<.18){targetX=.18;dir=1;targetY=.43+Math.random()*.13}updateHud();draw();if(elapsed>=60){running=false;msg.textContent='Fin de session ! Score : '+score+' points.';startBtn.textContent='REJOUER';return}requestAnimationFrame(loop)}
  function pointer(e){const r=canvas.getBoundingClientRect();aim.x=clamp((e.clientX-r.left)/r.width,0,1);aim.y=clamp((e.clientY-r.top)/r.height,0,1);draw()}
  canvas.addEventListener('pointermove',pointer);
- canvas.addEventListener('pointerdown',e=>{pointer(e);if(!running){msg.textContent='Commence la session pour tirer.';return}shots++;let dx=(aim.x-targetX)*canvas.width,dy=(aim.y-targetY)*canvas.height;let dist=Math.sqrt(dx*dx+dy*dy);let radius=canvas.width*.075;let points=dist<radius*.18?100:dist<radius*.38?75:dist<radius*.62?50:dist<radius?25:0;if(points){hits++;score+=points;msg.textContent='Touché ! +'+points+' points';holes.push({x:aim.x,y:aim.y})}else msg.textContent='Raté ! Ajuste ta visée.';if(holes.length>18)holes.shift();updateHud();draw()});
+ canvas.addEventListener('pointerdown',e=>{pointer(e);if(!running){msg.textContent='Commence la session pour tirer.';return}shots++;let dx=(aim.x-targetX)*canvas.width,dy=(aim.y-targetY)*canvas.height;let dist=Math.sqrt(dx*dx+dy*dy);let radius=canvas.width*.075;let points=dist<radius*.18?100:dist<radius*.38?75:dist<radius*.62?50:dist<radius?25:0;if(points){hits++;score+=points;msg.textContent='Touché ! +'+points+' points';holes.push({dx:(aim.x-targetX)/.07,dy:(aim.y-targetY)/.22})}else msg.textContent='Raté ! Ajuste ta visée.';if(holes.length>18)holes.shift();updateHud();draw()});
  startBtn.addEventListener('click',start);resetBtn.addEventListener('click',reset);
  function draw(){
   const w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=Math.min(w,h)*.43;
@@ -86,6 +86,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
   ctx.beginPath();ctx.moveTo(-w*.027,-h*.055);ctx.lineTo(w*.027,-h*.055);ctx.lineTo(w*.035,h*.12);ctx.lineTo(w*.018,h*.16);ctx.lineTo(-w*.018,h*.16);ctx.lineTo(-w*.035,h*.12);ctx.closePath();ctx.fill();ctx.stroke();
   // bullseye rings
   [w*.022,w*.016,w*.01,w*.004].forEach((rr,i)=>{ctx.beginPath();ctx.arc(0,h*.035,rr,0,Math.PI*2);ctx.fillStyle=i===3?'#b52e28':i%2?'#222':'#eee';ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=1.5;ctx.stroke()});
+  // Impacts imprimés sur la cible : ils restent à la même place sur le carton pendant son déplacement
+  holes.forEach(p=>{const hx=tx+p.dx*w*.07,hy=ty+p.dy*h*.22;if(Math.abs(p.dx)<.43&&p.dy>-.25&&p.dy<.72){ctx.fillStyle='#26201b';ctx.beginPath();ctx.arc(hx,hy,5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#f3d9b5';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(hx,hy,7,0,Math.PI*2);ctx.stroke();}});
   ctx.restore();
   // scope mask
   ctx.save();ctx.fillStyle='rgba(0,0,0,.94)';ctx.beginPath();ctx.rect(0,0,w,h);ctx.arc(cx,cy,r,0,Math.PI*2,true);ctx.fill('evenodd');ctx.restore();
@@ -95,9 +97,10 @@ document.getElementById('year').textContent=new Date().getFullYear();
   ctx.strokeStyle='#080a0b';ctx.lineWidth=24;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
   ctx.strokeStyle='#d7ded5';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,r-12,0,Math.PI*2);ctx.stroke();
   // reticle and range marks
-  ctx.strokeStyle='rgba(230,238,226,.88)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-r*.92,cy);ctx.lineTo(cx+r*.92,cy);ctx.moveTo(cx,cy-r*.92);ctx.lineTo(cx,cy+r*.92);ctx.stroke();
-  ctx.strokeStyle='rgba(230,238,226,.55)';for(let i=-5;i<=5;i++){let xx=cx+i*r*.12,yy=cy+i*r*.12;ctx.beginPath();ctx.moveTo(xx,cy-7);ctx.lineTo(xx,cy+7);ctx.moveTo(cx-7,yy);ctx.lineTo(cx+7,yy);ctx.stroke()}
-  ctx.strokeStyle='#d5efc7';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,8,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#d5efc7';ctx.fillRect(cx-2,cy-2,4,4);
+  const ax=cx+(aim.x-.5)*w,ay=cy+(aim.y-.5)*h;
+  ctx.strokeStyle='rgba(230,238,226,.82)';ctx.lineWidth=1.7;ctx.beginPath();ctx.moveTo(ax-r*.92,ay);ctx.lineTo(ax-r*.12,ay);ctx.moveTo(ax+r*.12,ay);ctx.lineTo(ax+r*.92,ay);ctx.moveTo(ax,ay-r*.92);ctx.lineTo(ax,ay-r*.12);ctx.moveTo(ax,ay+r*.12);ctx.lineTo(ax,ay+r*.92);ctx.stroke();
+  ctx.strokeStyle='rgba(230,238,226,.6)';for(let i=-5;i<=5;i++){let xx=ax+i*r*.12,yy=ay+i*r*.12;ctx.beginPath();ctx.moveTo(xx,ay-6);ctx.lineTo(xx,ay+6);ctx.moveTo(ax-6,yy);ctx.lineTo(ax+6,yy);ctx.stroke()}
+  ctx.strokeStyle='#d5efc7';ctx.lineWidth=2;ctx.beginPath();ctx.arc(ax,ay,8,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#d5efc7';ctx.fillRect(ax-2,ay-2,4,4);
   // small scope labels
   ctx.fillStyle='#d9e2d5';ctx.font='bold 18px monospace';ctx.fillText('ZORUS // RANGE 01',cx-r*.82,cy-r*.78);ctx.fillText('100 M',cx+r*.56,cy+r*.78);
   ctx.restore();
