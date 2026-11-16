@@ -88,9 +88,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
   [w*.022,w*.016,w*.01,w*.004].forEach((rr,i)=>{ctx.beginPath();ctx.arc(0,h*.035,rr,0,Math.PI*2);ctx.fillStyle=i===3?'#b52e28':i%2?'#222':'#eee';ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=1.5;ctx.stroke()});
   ctx.restore();
   // scope mask
-  ctx.save();ctx.fillStyle='rgba(0,0,0,.94)';ctx.fillRect(0,0,w,h);ctx.globalCompositeOperation='destination-out';ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();ctx.restore();
+  ctx.save();ctx.fillStyle='rgba(0,0,0,.94)';ctx.beginPath();ctx.rect(0,0,w,h);ctx.arc(cx,cy,r,0,Math.PI*2,true);ctx.fill('evenodd');ctx.restore();
   ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
-  // redraw scope view by clipping, overlay subtle glass
   ctx.fillStyle='rgba(12,18,16,.13)';ctx.fillRect(cx-r,cy-r,r*2,r*2);
   ctx.restore();
   ctx.strokeStyle='#080a0b';ctx.lineWidth=24;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
