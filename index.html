@@ -60,7 +60,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
  const scoreEl=document.getElementById('rangeScore'),timeEl=document.getElementById('rangeTime'),shotsEl=document.getElementById('rangeShots'),accEl=document.getElementById('rangeAccuracy'),msg=document.getElementById('rangeMessage');
  const startBtn=document.getElementById('rangeStart'),resetBtn=document.getElementById('rangeReset');
  let running=false,score=0,shots=0,hits=0,time=60,last=0,elapsed=0,targetX=.5,targetY=.48,dir=1,speed=.19,aim={x:.5,y:.5},holes=[],lastShot=0;
- const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const targetLogo=new Image();targetLogo.src='logo_MS.png';targetLogo.onload=()=>draw();
  function updateHud(){scoreEl.textContent=String(score).padStart(4,'0');timeEl.textContent=time;shotsEl.textContent=shots;accEl.textContent=shots?Math.round(hits/shots*100)+'%':'—'}
  function reset(){running=false;score=0;shots=0;hits=0;time=60;elapsed=0;holes=[];targetX=.5;targetY=.48;dir=1;updateHud();msg.textContent='Prêt ? Lance la session de 60 secondes.';startBtn.textContent='COMMENCER LE TIR';draw()}
  function start(){if(running)return;if(time<=0)reset();running=true;last=performance.now();msg.textContent='Session en cours — bonne visée !';startBtn.textContent='SESSION EN COURS';requestAnimationFrame(loop)}
@@ -86,7 +86,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
   ctx.beginPath();ctx.moveTo(-w*.027,-h*.055);ctx.lineTo(w*.027,-h*.055);ctx.lineTo(w*.035,h*.12);ctx.lineTo(w*.018,h*.16);ctx.lineTo(-w*.018,h*.16);ctx.lineTo(-w*.035,h*.12);ctx.closePath();ctx.fill();ctx.stroke();
   // bullseye rings
   [w*.022,w*.016,w*.01,w*.004].forEach((rr,i)=>{ctx.beginPath();ctx.arc(0,h*.035,rr,0,Math.PI*2);ctx.fillStyle=i===3?'#b52e28':i%2?'#222':'#eee';ctx.fill();ctx.strokeStyle='#222';ctx.lineWidth=1.5;ctx.stroke()});
-  // Impacts imprimés sur la cible : ils restent à la même place sur le carton pendant son déplacement
+  if(targetLogo.complete&&targetLogo.naturalWidth){ctx.save();ctx.globalAlpha=.96;ctx.drawImage(targetLogo,-w*.018,-h*.005,w*.036,h*.04);ctx.restore();}\n  // Impacts imprimés sur la cible : ils restent à la même place sur le carton pendant son déplacement
   holes.forEach(p=>{const hx=tx+p.dx*w*.07,hy=ty+p.dy*h*.22;if(Math.abs(p.dx)<.43&&p.dy>-.25&&p.dy<.72){ctx.fillStyle='#26201b';ctx.beginPath();ctx.arc(hx,hy,5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#f3d9b5';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(hx,hy,7,0,Math.PI*2);ctx.stroke();}});
   ctx.restore();
   // scope mask
