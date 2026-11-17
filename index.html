@@ -98,8 +98,8 @@ section{padding:65px 0}.section-head{display:flex;align-items:end;justify-conten
 @media(max-width:800px){.community-stats{grid-template-columns:1fr}.community-network-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style><style>
 /* Global visitor counter footer */
-.site-visitor-counter{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:56px auto 24px;padding:24px 16px;text-align:center;border-top:1px solid #ffffff18;color:#aeb5c8}
-.site-visitor-counter .visitor-kicker{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#38d9f5;font-weight:800}
+.site-visitor-counter{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;min-height:150px;margin:56px auto 24px;padding:28px 16px;text-align:center;border-top:1px solid #ffffff18;color:#aeb5c8;visibility:visible!important;opacity:1!important}
+.site-visitor-counter .visitor-kicker{display:block;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#38d9f5;font-weight:800}
 .site-visitor-counter .counterapi{min-height:44px;display:flex;align-items:center;justify-content:center}
 .site-visitor-counter .counterapi *{font-family:inherit!important}
 </style>
@@ -216,10 +216,10 @@ const mobileMenu=document.getElementById('mobileMenu'),siteNav=document.getEleme
 </script>
 <section class="site-visitor-counter" aria-label="Compteur de visiteurs du site">
  <div class="visitor-kicker">La communauté Mistosorus</div>
- <div class="counterapi" ns="mistosorus.fr" key="visiteurs-total" label="visiteurs" icon="eye" color="#f4f5ff" bg="transparent" iconColor="#38d9f5" noLink="true" style="min-height:44px"></div>
+ <div class="counterapi" ns="mistosorus.fr" key="visiteurs-total" label="visites" icon="eye" noLink="true" noCss="true" style="min-height:44px;font-size:30px;font-weight:800;color:#f4f5ff"></div>
  <div>Merci pour votre visite !</div>
 </section>
-<script src="https://counterapi.com/c.js?ns=mistosorus.fr" async></script>
+<script src="https://counterapi.com/c.js" async></script>
 </body></html>
 <style>
 /* Single verified community total */
