@@ -96,7 +96,14 @@ section{padding:65px 0}.section-head{display:flex;align-items:end;justify-conten
 .community-network>strong{display:block;margin:13px 0 5px;font:900 25px 'Barlow Condensed';color:#fff}
 .community-note{margin:14px 0 0;color:#9eabc2;font-size:11px;line-height:1.6}
 @media(max-width:800px){.community-stats{grid-template-columns:1fr}.community-network-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head>
+</style><style>
+/* Global visitor counter footer */
+.site-visitor-counter{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:56px auto 24px;padding:24px 16px;text-align:center;border-top:1px solid #ffffff18;color:#aeb5c8}
+.site-visitor-counter .visitor-kicker{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#38d9f5;font-weight:800}
+.site-visitor-counter .counterapi{min-height:44px;display:flex;align-items:center;justify-content:center}
+.site-visitor-counter .counterapi *{font-family:inherit!important}
+</style>
+</head>
 <body>
 <header><div class="wrap"><nav><a class="brand" href="#" aria-label="Mistosorus — accueil"><img src="mistosorus%20site%20web.png" alt="Mistosorus"></a><div class="navlinks" id="siteNav"><a href="#univers">UNIVERS</a><a href="#contenu">CONTENU</a><a href="#zorus">LES ZORUS</a><a href="#partenaires">PARTENAIRES</a><a href="#reseaux">RÉSEAUX</a><a href="#classement">CLASSEMENT</a><a href="#mini-jeu">MINI-JEU</a></div><button class="mobile-menu" id="mobileMenu" aria-label="Ouvrir le menu" aria-expanded="false">☰</button><a class="btn header-cta" href="https://www.youtube.com/@MistoSorus" target="_blank" rel="noreferrer">VOIR YOUTUBE ↗</a></nav></div></header>
 <main><div class="wrap">
@@ -207,6 +214,12 @@ const mobileMenu=document.getElementById('mobileMenu'),siteNav=document.getEleme
  reset();
 })();
 </script>
+<section class="site-visitor-counter" aria-label="Compteur de visiteurs du site">
+ <div class="visitor-kicker">La communauté Mistosorus</div>
+ <div class="counterapi" ns="mistosorus.fr" key="visiteurs-total" label="visiteurs" icon="eye" color="#f4f5ff" bg="transparent" iconColor="#38d9f5" noLink="true" style="min-height:44px"></div>
+ <div>Merci pour votre visite !</div>
+</section>
+<script src="https://counterapi.com/c.js?ns=mistosorus.fr" async></script>
 </body></html>
 <style>
 /* Single verified community total */
