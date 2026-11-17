@@ -117,19 +117,9 @@ section{padding:65px 0}.section-head{display:flex;align-items:end;justify-conten
 <div class="video-panel"><h3>TIKTOK</h3><p>Le profil TikTok Mistosorus intégré au site.</p><div class="tiktok-frame"><blockquote class="tiktok-embed" cite="https://www.tiktok.com/@mistosorus" data-unique-id="mistosorus" data-embed-type="creator" style="max-width:780px;min-width:288px;"><section><a target="_blank" rel="noreferrer" href="https://www.tiktok.com/@mistosorus?refer=creator_embed">@mistosorus</a></section></blockquote></div><a class="video-link" href="https://www.tiktok.com/@mistosorus" target="_blank" rel="noreferrer">OUVRIR TIKTOK ↗</a></div>
 </div></section>
 <section id="zorus"><div class="feature"><div><div class="eyebrow">Plus qu'une communauté</div><h2>UNE TEAM.<br>UN ESPRIT.<br>LES ZORUS.</h2><p>Les ZORUS, c'est l'entraide, le partage et le plaisir de jouer ensemble. Que tu sois là pour progresser, découvrir des astuces ou simplement passer un bon moment, tu es le bienvenu.</p><div class="actions"><a class="btn" href="https://discord.gg/2kYqKRhCAP" target="_blank" rel="noreferrer">REJOINDRE LE DISCORD ↗</a><a class="btn ghost" href="https://www.twitch.tv/mistosorus" target="_blank" rel="noreferrer">SUIVRE SUR TWITCH ↗</a></div></div><div class="feature-box"><span>COMMUNITY FIRST</span><strong>ENTRAIDE<br>· PARTAGE<br>· GOOD VIBES</strong><p style="color:#a6aec0;font-size:13px;line-height:1.7">Retrouve la communauté sur Discord et viens suivre les lives sur Twitch.</p></div></div></section>
-<section id="statistiques"><div class="section-head"><div><div class="eyebrow">La communauté en chiffres</div><h2>MES STATISTIQUES</h2></div><p>Les chiffres des réseaux seront réunis ici et actualisés automatiquement dès que les sources de données seront disponibles.</p></div>
-<div class="community-stats">
- <div class="community-total"><span>ABONNÉS · TOUS RÉSEAUX</span><strong>EN SYNCHRONISATION</strong><small>Le total cumulé sera affiché ici.</small></div>
- <div class="community-total"><span>VUES · TOUS RÉSEAUX</span><strong>—</strong><small>En attente des statistiques vérifiées.</small></div>
- <div class="community-total"><span>LIKES · TOUS RÉSEAUX</span><strong>—</strong><small>En attente des statistiques vérifiées.</small></div>
-</div>
-<div class="community-network-grid">
- <div class="community-network"><b>▶ YOUTUBE</b><strong>—</strong><span>Abonnés · vues · likes</span></div>
- <div class="community-network"><b>🟣 TWITCH</b><strong>—</strong><span>Followers · vues</span></div>
- <div class="community-network"><b>♪ TIKTOK</b><strong>—</strong><span>Abonnés · vues · likes</span></div>
- <div class="community-network"><b>◎ INSTAGRAM</b><strong>—</strong><span>Abonnés · vues · likes</span></div>
- <div class="community-network"><b>𝕏 X</b><strong>≈ 1 000</strong><span>Abonnés publics · compteur arrondi</span></div>
-</div><p class="community-note">Les tirets indiquent des données non encore disponibles : aucun chiffre estimé n'est ajouté aux totaux.</p></section>
+<section id="statistiques"><div class="section-head"><div><div class="eyebrow">La communauté en chiffres</div><h2>LES ZORUS AU TOTAL</h2></div><p>Un seul compteur réunira les abonnés de YouTube, Twitch, TikTok, Instagram et X dès que les cinq chiffres seront disponibles.</p></div>
+<div class="community-total community-total-global"><span>ABONNÉS · 5 RÉSEAUX</span><strong>— — — — —</strong><small>Compteur global en attente de synchronisation des cinq plateformes.</small><div class="community-live-line" aria-hidden="true"></div></div>
+<p class="community-note">Le total ne s'affichera qu'avec les cinq sources vérifiées. Les chiffres ne seront pas inventés : l'animation du compteur accompagnera uniquement les vraies mises à jour.</p></section>
 
 <section id="reseaux"><div class="section-head"><div><div class="eyebrow">Retrouve-moi en ligne</div><h2>MES RÉSEAUX</h2></div><p>Suis les actualités, les lives et les vidéos courtes de Mistosorus.</p></div><div class="cards"><a class="card" href="https://www.youtube.com/@MistoSorus" target="_blank" rel="noreferrer"><div class="icon">▶️</div><h3>YOUTUBE</h3><p>Vidéos, guides et contenus gaming.</p></a><a class="card" href="https://www.twitch.tv/mistosorus" target="_blank" rel="noreferrer"><div class="icon">🟣</div><h3>TWITCH</h3><p>Retrouve-moi en live sur la chaîne Mistosorus.</p></a><a class="card" href="https://www.tiktok.com/@mistosorus" target="_blank" rel="noreferrer"><div class="icon">♪</div><h3>TIKTOK</h3><p>Clips et formats courts de l'univers Mistosorus.</p></a><a class="card" href="https://www.instagram.com/mistosorus/" target="_blank" rel="noreferrer"><div class="icon">◎</div><h3>INSTAGRAM</h3><p>Retrouve les actus et les publications de Mistosorus.</p></a><a class="card" href="https://x.com/mistosorus" target="_blank" rel="noopener noreferrer"><div class="icon">𝕏</div><h3>X</h3><p>Retrouve-moi sur X pour les actus et échanges.</p></a></div></section>
 
@@ -213,3 +203,10 @@ const mobileMenu=document.getElementById('mobileMenu'),siteNav=document.getEleme
 })();
 </script>
 </body></html>
+<style>
+/* Single verified community total */
+.community-total-global{max-width:680px;margin:0 auto;text-align:center;padding:32px 24px}
+.community-total-global>strong{font-size:clamp(38px,8vw,68px);letter-spacing:5px}
+.community-live-line{height:3px;width:min(220px,65%);margin:18px auto 0;border-radius:4px;background:var(--accent);opacity:.8;animation:communityGlow 2.8s ease-in-out infinite}
+@keyframes communityGlow{0%,100%{opacity:.35;transform:scaleX(.72)}50%{opacity:1;transform:scaleX(1)}}
+</style>
